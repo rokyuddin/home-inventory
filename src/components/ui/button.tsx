@@ -23,14 +23,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const variants = {
-      primary: "bg-primary border-primary text-white hover:bg-[#1D4ED8] shadow-sm shadow-blue-200",
+      primary:
+        "bg-primary border-primary text-white hover:bg-[#1D4ED8] shadow-sm shadow-blue-200",
       outline: "bg-white border-[#E2E8F0] text-[#334155] hover:bg-bg-main",
-      ghost: "bg-transparent text-[#64748B] hover:bg-bg-main hover:text-[#0F172A]",
-      danger: "bg-red-600 border-red-600 text-white hover:bg-red-700 shadow-sm shadow-red-200",
-      success: "bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 shadow-sm shadow-emerald-200",
+      ghost:
+        "bg-transparent text-[#64748B] hover:bg-bg-main hover:text-[#0F172A]",
+      danger:
+        "bg-red-600 border-red-600 text-white hover:bg-red-700 shadow-sm shadow-red-200",
+      success:
+        "bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 shadow-sm shadow-emerald-200",
     };
 
     const sizes = {
@@ -48,7 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center gap-2 rounded-md border font-bold transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95",
           variants[variant],
           sizes[size],
-          className
+          className,
         )}
         {...props}
       >
@@ -76,10 +80,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {!isLoading && leftIcon && <span className="shrink-0">{leftIcon}</span>}
         {children}
-        {!isLoading && rightIcon && <span className="shrink-0">{rightIcon}</span>}
+        {!isLoading && rightIcon && (
+          <span className="shrink-0">{rightIcon}</span>
+        )}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";
