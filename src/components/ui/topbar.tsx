@@ -7,7 +7,7 @@ export function Topbar() {
     <header className="bg-white px-8 py-5 border-b border-[#F1F5F9] flex items-center justify-between gap-8 shrink-0">
       <div className="flex items-center gap-12 flex-1">
         <h1 className="text-2xl font-bold text-[#0F172A]">Inventory</h1>
-        
+
         <div className="relative flex-1 max-w-xl">
           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
             <Search className="h-5 w-5 text-[#94A3B8]" />
@@ -24,9 +24,7 @@ export function Topbar() {
         <Button variant="outline" leftIcon={<Download className="h-5 w-5" />}>
           Export
         </Button>
-        <Button leftIcon={<Plus className="h-5 w-5" />}>
-          Add Item
-        </Button>
+        <Button leftIcon={<Plus className="h-5 w-5" />}>Add Item</Button>
       </div>
     </header>
   );

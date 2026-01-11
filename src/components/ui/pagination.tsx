@@ -32,9 +32,9 @@ export default function Pagination({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // If there are no items or only one page, we might still want to show the status
-  // or hide the pagination. For consistency with the UI, we'll show it but 
+  // or hide the pagination. For consistency with the UI, we'll show it but
   // disable navigation if totalPages <= 1.
-  
+
   const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
@@ -47,14 +47,20 @@ export default function Pagination({
   };
 
   return (
-    <div className={cn("flex flex-wrap items-center justify-between gap-4 px-4 py-3", className)}>
+    <div
+      className={cn(
+        "flex flex-wrap items-center justify-between gap-4 px-4 py-3",
+        className,
+      )}
+    >
       {/* Items Status */}
       <div className="text-sm text-[#64748B]">
         Showing{" "}
         <span className="font-semibold text-[#0F172A]">
           {startItem}-{endItem}
         </span>{" "}
-        of <span className="font-semibold text-[#0F172A]">{totalItems}</span> items
+        of <span className="font-semibold text-[#0F172A]">{totalItems}</span>{" "}
+        items
       </div>
 
       {/* Navigation Buttons */}
@@ -93,7 +99,7 @@ export default function Pagination({
               onClick={() => handlePageChange(page)}
               className={cn(
                 "h-10 w-10 p-0 text-sm font-bold",
-                isCurrent && "shadow-blue-200"
+                isCurrent && "shadow-blue-200",
               )}
               aria-current={isCurrent ? "page" : undefined}
             >
