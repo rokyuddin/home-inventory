@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import { Badge, BadgeVariant } from "./ui/badge";
-import Pagination from "./ui/pagination";
+} from "../ui/table";
+import { Badge, BadgeVariant } from "../ui/badge";
+import Pagination from "../ui/pagination";
 import { InventoryItem, Label } from "@/types/inventory";
 import { useRouter } from "next/navigation";
 

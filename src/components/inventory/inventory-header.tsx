@@ -1,9 +1,9 @@
 "use client";
 
 import { Download, Plus, Search, Loader2 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import InventoryFilter from "./inventory-filter";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { inventoryApi } from "@/lib/inventory-api";
 
 interface InventoryHeaderProps {

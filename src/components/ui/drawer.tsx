@@ -55,6 +55,7 @@ export function Drawer({
           isOpen ? "translate-x-0" : "translate-x-full",
           className,
         )}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center p-4 border-gray-100 border-b">
           <h2 className="font-semibold text-gray-900 text-lg">{title}</h2>

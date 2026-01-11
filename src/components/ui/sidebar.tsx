@@ -8,12 +8,16 @@ import {
   BarChart2,
   Settings,
   MoreVertical,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { useAuth } from "@/context/auth-context";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -30,6 +34,7 @@ const navItems = [
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -49,6 +54,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           isCollapsed ? "w-20" : "w-72",
         )}
       >
+        {/* Collapse Toggle Button */}
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="hidden lg:flex absolute -right-3 top-8 z-50 items-center justify-center w-6 h-6 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 transition-colors"
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {isCollapsed ? (
+            <ChevronRight className="w-4 h-4 text-slate-500" />
+          ) : (
+            <ChevronLeft className="w-4 h-4 text-slate-500" />
+          )}
+        </button>
         <div className="lg:block flex justify-between items-center">
           {/* Logo/Brand */}
           <div className={cn("p-6 pb-2", isCollapsed && "px-2 py-6")}>
@@ -92,40 +109,79 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 pathname.startsWith("/dashboard/inventory"));
 
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-[15px] transition-all duration-200",
-                  isActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-slate-500 hover:bg-bg-main hover:text-slate-900",
-                  isCollapsed && "justify-center px-0 h-12 w-12 mx-auto",
-                )}
-              >
-                <Icon
+              <div key={item.href} className="relative group">
+                <Link
+                  href={item.href}
                   className={cn(
-                    "w-5 h-5 shrink-0",
-                    isActive ? "text-primary" : "text-slate-400",
+                    "flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-[15px] transition-all duration-200",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-slate-500 hover:bg-bg-main hover:text-slate-900",
+                    isCollapsed && "justify-center px-0 h-12 w-12 mx-auto",
                   )}
-                />
-                {!isCollapsed && <span>{item.name}</span>}
-              </Link>
+                >
+                  <Icon
+                    className={cn(
+                      "w-5 h-5 shrink-0",
+                      isActive ? "text-primary" : "text-slate-400",
+                    )}
+                  />
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Link>
+                {/* Tooltip - only visible when collapsed */}
+                {isCollapsed && (
+                  <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-800 text-white text-sm font-medium rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none shadow-lg">
+                    {item.name}
+                    <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-slate-800" />
+                  </span>
+                )}
+              </div>
             );
           })}
         </div>
 
         <div className="space-y-4 px-4 py-4">
-          <Link
-            href="/dashboard/settings"
-            className={cn(
-              "flex items-center gap-3 hover:bg-bg-main px-3 py-2.5 rounded-xl font-semibold text-[#64748B] text-[15px] hover:text-[#0F172A] transition-all duration-200",
-              isCollapsed && "justify-center px-0 h-12 w-12 mx-auto",
+          <div className="relative group">
+            <Link
+              href="/dashboard/settings"
+              className={cn(
+                "flex items-center gap-3 hover:bg-bg-main px-3 py-2.5 rounded-xl font-semibold text-[#64748B] text-[15px] hover:text-[#0F172A] transition-all duration-200",
+                isCollapsed && "justify-center px-0 h-12 w-12 mx-auto",
+              )}
+            >
+              <Settings className="w-5 h-5 text-[#94A3B8] shrink-0" />
+              {!isCollapsed && <span>Settings</span>}
+            </Link>
+            {/* Tooltip - only visible when collapsed */}
+            {isCollapsed && (
+              <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-800 text-white text-sm font-medium rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none shadow-lg">
+                Settings
+                <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-slate-800" />
+              </span>
             )}
-          >
-            <Settings className="w-5 h-5 text-[#94A3B8] shrink-0" />
-            {!isCollapsed && <span>Settings</span>}
-          </Link>
+          </div>
+
+          {/* Sign Out */}
+          <div className="relative group">
+            <button
+              onClick={logout}
+              className={cn(
+                "flex items-center gap-3 hover:bg-red-50 px-3 py-2.5 rounded-xl font-semibold text-[#64748B] text-[15px] hover:text-red-600 transition-all duration-200 w-full",
+                isCollapsed && "justify-center px-0 h-12 w-12 mx-auto",
+              )}
+            >
+              <LogOut className="w-5 h-5 text-[#94A3B8] shrink-0" />
+              {!isCollapsed && <span>Sign Out</span>}
+            </button>
+            {/* Tooltip - only visible when collapsed */}
+            {isCollapsed && (
+              <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-800 text-white text-sm font-medium rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none shadow-lg">
+                Sign Out
+                <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-slate-800" />
+              </span>
+            )}
+          </div>
+
           <div className="bg-[#F1F5F9] -mx-4 h-px" />
           {/* User Profile */}
           <div
@@ -144,11 +200,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               </div>
               {!isCollapsed && (
                 <div className="flex flex-col min-w-0">
-                  <span className="font-bold text-[#0F172A] text-[14px] truncate">
-                    John Smith
+                  <span className="font-bold text-[#0F172A] text-[14px] truncate capitalize">
+                    {user?.username.split("@")[0]}
                   </span>
                   <span className="font-medium text-[#64748B] text-[12px] truncate">
-                    john@example.com
+                    {user?.username}
                   </span>
                 </div>
               )}

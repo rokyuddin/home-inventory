@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "./ui/button";
-import { InventoryItem } from "../types/inventory";
-import { inventoryApi } from "../lib/inventory-api";
+import { Button } from "../ui/button";
+import { InventoryItem } from "../../types/inventory";
+import { inventoryApi } from "../../lib/inventory-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2, AlertTriangle } from "lucide-react";
-import { Dialog } from "./ui/dialog";
+import { Dialog } from "../ui/dialog";
 
 interface DeleteItemModalProps {
   item?: InventoryItem;

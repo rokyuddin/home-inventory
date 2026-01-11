@@ -42,7 +42,8 @@ export function LocationActions({
         <div className="flex gap-2">
             <Button
                 variant="outline"
-                className="gap-2 border-slate-200 text-slate-600"
+                
+                className="gap-2 border-slate-200 text-slate-600 px-3 py-1.5 text-xs md:px-8 md:py-3 md:text-base"
                 onClick={onEdit}
             >
                 <Edit2 className="size-4" />
@@ -50,7 +51,8 @@ export function LocationActions({
             </Button>
             <Button
                 variant="outline"
-                className="gap-2 bg-primary/10 border-slate-200 text-primary"
+                
+                className="gap-2 bg-primary/10 border-slate-200 text-primary px-3 py-1.5 text-xs md:px-8 md:py-3 md:text-base"
                 onClick={onAddChild}
             >
                 <Plus className="size-4" />
@@ -58,7 +60,8 @@ export function LocationActions({
             </Button>
             <Button
                 variant="outline"
-                className="gap-2 bg-red-50/50 hover:bg-red-50 border-slate-200 text-red-500"
+                
+                className="gap-2 bg-red-50/50 hover:bg-red-50 border-slate-200 text-red-500 px-3 py-1.5 text-xs md:px-8 md:py-3 md:text-base"
                 onClick={() => setIsDeleteDialogOpen(true)}
             >
                 <Trash2 className="size-4" />

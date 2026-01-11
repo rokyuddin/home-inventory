@@ -1,10 +1,10 @@
 "use client";
-import InventoryHeader from "@/components/inventory-header";
-import InventoryTable from "@/components/inventory-table";
+import InventoryHeader from "@/components/inventory/inventory-header";
+import InventoryTable from "@/components/inventory/inventory-table";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useInventory } from "@/hooks/use-inventory";
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { AlertCircle, RefreshCcw } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 

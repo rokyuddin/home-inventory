@@ -42,12 +42,12 @@ export function LocationTree({
   );
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-4 border-slate-200 border-r w-80 h-full">
+    <div className="flex flex-col gap-3 sm:gap-4 bg-white p-3 sm:p-4 border-slate-200 lg:border-r w-full lg:w-80 h-full overflow-hidden">
       <div className="relative">
         <Search className="top-1/2 left-3 absolute size-4 text-slate-400 -translate-y-1/2" />
         <Input
           placeholder="Search locations..."
-          className="bg-slate-50 pl-10 border-slate-200"
+          className="bg-slate-50 pl-10 border-slate-200 text-sm sm:text-base"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Drawer } from "./ui/drawer";
-import { Button } from "./ui/button";
-import Input from "./ui/input";
-import { InventoryItem, CreateInventoryPayload } from "../types/inventory";
-import { inventoryApi } from "../lib/inventory-api";
+import { Drawer } from "../ui/drawer";
+import { Button } from "../ui/button";
+import Input from "../ui/input";
+import { InventoryItem, CreateInventoryPayload } from "../../types/inventory";
+import { inventoryApi } from "../../lib/inventory-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useLabels, useLocations } from "@/hooks/use-inventory";
-import { Select } from "./ui/select";
+import { Select } from "../ui/select";
 
 interface EditItemDrawerProps {
   item?: InventoryItem;
@@ -105,11 +105,12 @@ export default function EditItemDrawer({
             <Input
               type="number"
               value={formData.quantity || 0}
-              onChange={(e) =>
+              onChange={(e) => {
                 setFormData({
                   ...formData,
                   quantity: parseInt(e.target.value) || 0,
                 })
+              }
               }
               placeholder="0"
               required

@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "./ui/input";
 import Link from "next/link";
 import { ArrowRight, User, Eye, Box, AlertCircle, Loader2 } from "lucide-react";
-import { Button } from "./ui/button";
 import Image from "next/image";
 import { useAuth } from "@/context/auth-context";
+import Input from "../ui/input";
+import { Button } from "../ui/button";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -143,9 +143,9 @@ export default function LoginForm() {
             href="http://4.213.57.100:3100/swagger/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 font-bold hover:underline"
+            className="text-blue-600 hover:underline"
           >
-            Register via API (Swagger)
+            Create one
           </a>
         </p>
       </div>
@@ -155,24 +155,24 @@ export default function LoginForm() {
         <p className="text-[13px] font-semibold text-slate-400">
           Version 1.2.4
         </p>
-        <div className="flex items-center justify-center gap-4 text-[13px] font-bold text-slate-400">
+        <div className="flex items-center justify-center gap-4 text-sm">
           <Link
             href="#"
-            className="hover:text-slate-600 transition-colors uppercase tracking-wider"
+            className="hover:text-slate-600 transition-colors tracking-wider"
           >
             Help Center
           </Link>
           <span className="w-1 h-1 rounded-full bg-slate-300" />
           <Link
             href="#"
-            className="hover:text-slate-600 transition-colors uppercase tracking-wider"
+            className="hover:text-slate-600 transition-colors tracking-wider"
           >
             Privacy Policy
           </Link>
           <span className="w-1 h-1 rounded-full bg-slate-300" />
           <Link
             href="#"
-            className="hover:text-slate-600 transition-colors uppercase tracking-wider"
+            className="hover:text-slate-600 transition-colors tracking-wider"
           >
             Terms of Service
           </Link>

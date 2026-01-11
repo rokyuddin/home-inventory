@@ -18,8 +18,8 @@ import { useParams, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { InventoryItem } from "@/types/inventory";
-import DeleteItemModal from "@/components/delete-item-modal";
-import EditItemDrawer from "@/components/edit-item-drawer";
+import DeleteItemModal from "@/components/inventory/delete-item-modal";
+import EditItemDrawer from "@/components/inventory/edit-item-drawer";
 
 export default function InventoryDetailsPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

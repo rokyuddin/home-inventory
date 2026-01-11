@@ -6,11 +6,11 @@ import {
   useLabels,
   useLocations,
 } from "@/hooks/use-inventory";
-import Input from "./ui/input";
-import { Button } from "./ui/button";
-import { Select } from "./ui/select";
+import Input from "../ui/input";
+import { Button } from "../ui/button";
+import { Select } from "../ui/select";
 import { Loader2 } from "lucide-react";
-import { Drawer } from "./ui/drawer";
+import { Drawer } from "../ui/drawer";
 
 interface CreateItemModalProps {
   isOpen: boolean;

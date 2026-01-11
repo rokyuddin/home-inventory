@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown";
 
 import { InventoryItem } from "@/types/inventory";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import EditItemDrawer from "./edit-item-drawer";
 import DeleteItemModal from "./delete-item-modal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
