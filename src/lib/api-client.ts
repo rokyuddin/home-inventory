@@ -1,82 +1,81 @@
+import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
 
-const API_BASE_URL = 'http://4.213.57.100:3100/api/';
-
-interface RequestOptions extends RequestInit {
-  params?: Record<string, string>;
-}
+const API_BASE_URL = "/api";
 
 class ApiClient {
-  private baseUrl: string;
+  private client: AxiosInstance;
   private token: string | null = null;
 
   constructor(baseUrl: string) {
-    this.baseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+    this.client = axios.create({
+      baseURL: baseUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Request interceptor for auth token
+    this.client.interceptors.request.use((config) => {
+      if (this.token) {
+        const authHeader = this.token.startsWith("Bearer ")
+          ? this.token
+          : `Bearer ${this.token}`;
+        config.headers.Authorization = authHeader;
+      }
+      return config;
+    });
+
+    // Response interceptor for error handling
+    this.client.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const message =
+          error.response?.data?.message ||
+          error.message ||
+          "API request failed";
+        return Promise.reject(new Error(message));
+      },
+    );
   }
 
   setToken(token: string | null) {
     this.token = token;
   }
 
-  private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
-    const { params, ...init } = options;
-    
-    let url = new URL(endpoint.startsWith('/') ? endpoint.slice(1) : endpoint, this.baseUrl).toString();
-    
-    if (params) {
-      const searchParams = new URLSearchParams(params);
-      url += `?${searchParams.toString()}`;
-    }
-
-    const headers = new Headers(init.headers);
-    if (this.token) {
-      const authHeader = this.token.startsWith('Bearer ') ? this.token : `Bearer ${this.token}`;
-      headers.set('Authorization', authHeader);
-    }
-    if (!(init.body instanceof FormData) && !headers.has('Content-Type')) {
-      headers.set('Content-Type', 'application/json');
-    }
-
-    const response = await fetch(url, {
-      ...init,
-      headers,
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `API request failed: ${response.statusText}`);
-    }
-
-    // Some endpoints might return empty body
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-      return response.json() as Promise<T>;
-    }
-    
-    return {} as T;
+  getToken() {
+    return this.token;
   }
 
-  get<T>(endpoint: string, options?: RequestOptions) {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  // Generic request wrapper
+  private async request<T>(config: AxiosRequestConfig): Promise<T> {
+    const response = await this.client.request<T>(config);
+    return response.data;
   }
 
-  post<T>(endpoint: string, body?: any, options?: RequestOptions) {
-    return this.request<T>(endpoint, {
+  get<T>(endpoint: string, options?: AxiosRequestConfig) {
+    return this.request<T>({ ...options, url: endpoint, method: "GET" });
+  }
+
+  post<T>(endpoint: string, data?: any, options?: AxiosRequestConfig) {
+    return this.request<T>({
       ...options,
-      method: 'POST',
-      body: body instanceof FormData ? body : JSON.stringify(body),
+      url: endpoint,
+      method: "POST",
+      data,
     });
   }
 
-  put<T>(endpoint: string, body?: any, options?: RequestOptions) {
-    return this.request<T>(endpoint, {
+  put<T>(endpoint: string, data?: any, options?: AxiosRequestConfig) {
+    return this.request<T>({
       ...options,
-      method: 'PUT',
-      body: body instanceof FormData ? body : JSON.stringify(body),
+      url: endpoint,
+      method: "PUT",
+      data,
     });
   }
 
-  delete<T>(endpoint: string, options?: RequestOptions) {
-    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  delete<T>(endpoint: string, options?: AxiosRequestConfig) {
+    return this.request<T>({ ...options, url: endpoint, method: "DELETE" });
   }
 }
 
